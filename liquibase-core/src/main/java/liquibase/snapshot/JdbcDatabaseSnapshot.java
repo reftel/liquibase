@@ -1012,7 +1012,10 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                         "JOIN all_constraints ac ON atc.OWNER = ac.OWNER AND atc.TABLE_NAME = ac.TABLE_NAME AND acc.CONSTRAINT_NAME = ac.CONSTRAINT_NAME ";
 
                 if (!bulk || getAllCatalogsStringScratchData() == null) {
-                    sqlToSelectNotNullConstraints += " WHERE atc.OWNER='" + jdbcSchemaName + "' AND atc.hidden_column='NO' AND ac.CONSTRAINT_TYPE='C'  and ac.search_condition is not null ";
+                    sqlToSelectNotNullConstraints += " WHERE atc.OWNER='" + jdbcSchemaName + "'"
+                        + " AND acc.OWNER='" + jdbcSchemaName + "'"
+                        + " AND ac.OWNER='" + jdbcSchemaName + "'"
+                        + " AND atc.hidden_column='NO' AND ac.CONSTRAINT_TYPE='C'  and ac.search_condition is not null ";
                 } else {
                     sqlToSelectNotNullConstraints += " WHERE atc.OWNER IN ('" + jdbcSchemaName + "', " + getAllCatalogsStringScratchData() + ") "
                             + " AND atc.hidden_column='NO' AND ac.CONSTRAINT_TYPE='C'  and ac.search_condition is not null ";
